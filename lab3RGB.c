@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void printBinary(int val) {
+void printBinary(unsigned int val) {
     for (int i = 31; i >= 0; i--) {
         putchar((val & (1 << i)) ? '1' : '0');
         if (i % 8 == 0) putchar(' ');
@@ -9,33 +9,49 @@ void printBinary(int val) {
 }
 
 int main() {
-    int R, G, B;
-    const int A = 100;
+    unsigned int A, R, G, B;
+    
+    printf("Enter A value (0~255): ");
+    scanf("%u", &A);
+    printf("A: %u binary: ", A);
+    printBinary(A);
+    
+    printf("Enter R value (0~255): ");
+    scanf("%u", &R);
+    printf("R: %u binary: ", R);
+    printBinary(R);
+    
+    printf("Enter G value (0~255): ");
+    scanf("%u", &G);
+    printf("G: %u binary: ", G);
+    printBinary(G);
+    
+    printf("Enter B value (0~255): ");
+    scanf("%u", &B);
+    printf("B: %u binary: ", B);
+    printBinary(B);
 
-    while (1) {
-        printf("enter R value (0~255): ");
-        scanf("%d", &R);
-        if (R < 0) break;
-        printf("enter G value (0~255): ");
-        scanf("%d", &G);
-        if (G < 0) break;
-        printf("enter B value (0~255): ");
-        scanf("%d", &B);
-        if (B < 0) break;
+    unsigned int rgb_pack = (A << 24) | (R << 16) | (G << 8) | B;
+    printf("Packed: binary: ");
+    printBinary(rgb_pack);
+    printf("(%u)\n", rgb_pack);
 
-        int rgb_pack = (A << 24) | (R << 16) | (G << 8) | B;
+    printf("Unpacking ......\n");
+    unsigned int unpacked_R = (rgb_pack >> 16) & 0xFF;
+    unsigned int unpacked_G = (rgb_pack >> 8) & 0xFF;
+    unsigned int unpacked_B = rgb_pack & 0xFF;
 
-        printf("Packed: ");
-        printBinary(rgb_pack);
+    printf("R: binary: ");
+    printBinary(unpacked_R);
+    printf("(%u,%02u,0X%X)\n", unpacked_R, unpacked_R, unpacked_R);
 
-        int unpacked_R = (rgb_pack >> 16) & 0xFF;
-        int unpacked_G = (rgb_pack >> 8) & 0xFF;
-        int unpacked_B = rgb_pack & 0xFF;
+    printf("G: binary: ");
+    printBinary(unpacked_G);
+    printf("(%u,%02u,0X%X)\n", unpacked_G, unpacked_G, unpacked_G);
 
-        printf("Unpacked R: %d\n", unpacked_R);
-        printf("Unpacked G: %d\n", unpacked_G);
-        printf("Unpacked B: %d\n", unpacked_B);
-    }
+    printf("B: binary: ");
+    printBinary(unpacked_B);
+    printf("(%u,%02u,0X%X)\n", unpacked_B, unpacked_B, unpacked_B);
 
     return 0;
 }

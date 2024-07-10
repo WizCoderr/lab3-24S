@@ -12,23 +12,17 @@ int main() {
     short int flags; 
     char c;
     printf("Enter the flag: ");
-    scanf("%d",&flags);
+    scanf("%hd", &flags);
+    getchar();
     printf("Initial flags: ");
     printBinary(flags);
-
-    printf("Enter characters (Ctrl+D to end input):\n");
-    while ((c = getchar()) != EOF) {
+    printf("Enter characters (Ctrl+Z to end input):\n");
+    while ((c = getchar()) != -1) {
         if (c >= '0' && c <= '9') {
             flags |= 1 << (c - '0'); 
         }
     }
-
     printf("Final flags: ");
     printBinary(flags);
-
-    for (int i = 0; i < 10; i++) {
-        printf("%d: %s\n", i, (flags & (1 << i)) ? "Yes" : "No");
-    }
-
     return 0;
 }
